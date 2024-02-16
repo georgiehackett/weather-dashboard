@@ -3,27 +3,24 @@ document.addEventListener("DOMContentLoaded", (event) => {
   var todayEl = document.getElementById("today");
   var forecastEl = document.getElementById("forecast");
 
-  //  Build the URL to query the database
   var apiKey = "c2f29652dc947b9ba917f2a8f2a9b7e9";
 
-  // var city = '';
-
-  
 
   function searchWeather(event) {
     event.preventDefault();
 
-    var userInput = document.getElementById("search-input").value;    
+    todayEl.innerHTML = '';
+    forecastEl.innerHTML = '';
 
+    var userInput = document.getElementById("search-input").value;
+
+    //  Build the URL to query the database
     var forecastQueryURL =
       "http://api.openweathermap.org/data/2.5/forecast?q=" +
       userInput +
       "&appid=" +
       apiKey +
       "&limit=1";
-    console.log(forecastQueryURL);
-
-    // console.log(userInput);
 
     // Run Fetch call to the forecast API
     fetch(forecastQueryURL)
@@ -40,11 +37,9 @@ document.addEventListener("DOMContentLoaded", (event) => {
         var city = forecastData.city.name;
         var cityList = forecastData.list;
 
-        var todayForecast = document.getElementById('today');
-
         var todayCard = document.createElement('div');
         todayCard.classList.add('card');
-        todayForecast.appendChild(todayCard);
+        todayEl.appendChild(todayCard);
 
         var todayDate = forecastData.list[0].dt_txt;        
         todayDate = dayjs(todayDate).format('DD-MM-YY').replaceAll('-', '/');
@@ -83,8 +78,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
           var dailyForecast = cityList[i].main;
 
-          var forecastEl = document.getElementById("forecast");
-
           var forecastCol = document.createElement("div");
           forecastCol.classList.add("col");
 
@@ -121,6 +114,5 @@ document.addEventListener("DOMContentLoaded", (event) => {
       });
   }
   searchBtn.addEventListener("submit", searchWeather);
-  console.log(searchBtn);
 });
 
