@@ -42,9 +42,37 @@ console.log(forecastQueryURL);
 
     var cityList = forecastData.list;
 
-    for (i = 0; i < cityList.length; i+=8) {
+    for (i = 7; i < cityList.length; i+=7) {
       // console.log(forecastData);
       console.log(cityList[i]);
+      var dailyForecast = cityList[i].main;
+
+      var forecastEl = document.getElementById('forecast');
+
+      var forecastCol = document.createElement('div');
+      forecastCol.classList.add("col");
+
+      var forecastCard = document.createElement('div');
+      forecastCard.classList.add('card');
+      
+      var forecastCardBody = document.createElement('div');
+      forecastCardBody.classList.add('card-body');
+
+      var forecastIcon = document.createElement('img');
+      forecastIcon.src = "https://openweathermap.org/img/wn/" + cityList[i].weather[0].icon + "@2x.png";
+      console.log(forecastIcon);
+
+      forecastCardBody.appendChild(forecastIcon);
+      // forecastCardBody.innerText = `Temp: ${dailyForecast.temp}
+      // Humidity: ${dailyForecast.humidity}`;
+
+      forecastCard.appendChild(forecastCardBody)
+      forecastCol.appendChild(forecastCard);
+      forecastEl.appendChild(forecastCol);
+      
+    
+
+
     }
     
 
