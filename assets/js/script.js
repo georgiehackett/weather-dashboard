@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
       .then(function (forecastData) {
         // Log the resulting object
         console.log(forecastData);
-        console.log(forecastData.city);
+        // console.log(forecastData.city);
 
         var city = forecastData.city.name;
         var cityList = forecastData.list;
@@ -55,21 +55,33 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
         var iconDiv = document.createElement('div');
         iconDiv.classList.add('col');
+        cardContentRow.appendChild(iconDiv)
 
         var todayIcon = document.createElement('img');
         todayIcon.src = "https://openweathermap.org/img/wn/" + cityList[0].weather[0].icon + "@2x.png";
-        todayIcon.classList.add('w-25', 'm-3');
-        cardContentRow.appendChild(todayIcon, iconDiv);
+        todayIcon.classList.add('w-50', 'm-2');
+        iconDiv.appendChild(todayIcon);
+
 
         var infoDiv = document.createElement('div');
-        infoDiv.classList.add('col');
-        todayCard.appendChild(infoDiv)
+        infoDiv.classList.add('col', 'm-3');
+        cardContentRow.appendChild(infoDiv);
 
-        var todayTempEl = document.createElement('p')
+        var todayTempEl = document.createElement('p');        
         var todayTemp =  Math.round(100 * (cityList[0].main.temp - 273.15))/100;
         todayTempEl.textContent = `Temp: ${todayTemp}°C`;
-        console.log(todayTempEl);
         infoDiv.appendChild(todayTempEl);
+
+
+        var todayHumidityEl = document.createElement('p');
+        todayHumidityEl.textContent = `Humidity: ${cityList[0].main.humidity}%`
+        infoDiv.appendChild(todayHumidityEl);
+
+       
+
+
+    
+        // infoDiv.appendChild(todayTempEl);
 
 
         // Iterate through array to build 5-day forecast cards
@@ -107,6 +119,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
           forecastHumidity.innerText = `Humidity: ${dailyForecast.humidity}% `;
           forecastCardBody.appendChild(forecastHumidity);
 
+          forecastEl.appendChild(forecastCard);
           forecastCard.appendChild(forecastCardBody);
           forecastCol.appendChild(forecastCard);
           forecastEl.appendChild(forecastCol);
