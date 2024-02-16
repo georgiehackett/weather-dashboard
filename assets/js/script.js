@@ -13,16 +13,11 @@ document.addEventListener("DOMContentLoaded", (event) => {
   function searchWeather(event) {
     event.preventDefault();
 
-    console.log('test');
-    var userInput = document.getElementById("search-input").value;
-
-    console.log(userInput);
-
-    
+    var userInput = document.getElementById("search-input").value;    
 
     var forecastQueryURL =
       "http://api.openweathermap.org/data/2.5/forecast?q=" +
-      "London" +
+      userInput +
       "&appid=" +
       apiKey +
       "&limit=1";
