@@ -1,20 +1,24 @@
 document.addEventListener("DOMContentLoaded", (event) => {
-  var searchBtn = document.getElementById("search-button");
+  var searchBtn = document.getElementById("search-form");
   var todayEl = document.getElementById("today");
   var forecastEl = document.getElementById("forecast");
-  var userInput = document.getElementById("search-input").value;
 
   //  Build the URL to query the database
   var apiKey = "c2f29652dc947b9ba917f2a8f2a9b7e9";
 
   // var city = '';
 
-  searchBtn.addEventListener("submit", searchWeather());
+  
 
-  function searchWeather() {
+  function searchWeather(event) {
     event.preventDefault();
 
+    console.log('test');
+    var userInput = document.getElementById("search-input").value;
+
     console.log(userInput);
+
+    
 
     var forecastQueryURL =
       "http://api.openweathermap.org/data/2.5/forecast?q=" +
@@ -55,18 +59,33 @@ document.addEventListener("DOMContentLoaded", (event) => {
         todayDateEl.innerText = `${city} (${todayDate})`
         todayCard.appendChild(todayDateEl);
 
+        var cardContentRow = document.createElement('div');
+        cardContentRow.classList.add('row');
+        todayCard.appendChild(cardContentRow);
+
+        var iconDiv = document.createElement('div');
+        iconDiv.classList.add('col');
+
         var todayIcon = document.createElement('img');
-        todayIcon.src = "https://openweathermap.org/img/wn/" + forecastData.list[0].weather[0].icon + "@2x.png";
-        todayIcon.classList.add('w-25', 'm-3')
-        todayCard.appendChild(todayIcon);
+        todayIcon.src = "https://openweathermap.org/img/wn/" + cityList[0].weather[0].icon + "@2x.png";
+        todayIcon.classList.add('w-25', 'm-3');
+        cardContentRow.appendChild(todayIcon, iconDiv);
+
+        var infoDiv = document.createElement('div');
+        infoDiv.classList.add('col');
+        todayCard.appendChild(infoDiv)
+
+        var todayTempEl = document.createElement('p')
+        var todayTemp =  Math.round(100 * (cityList[0].main.temp - 273.15))/100;
+        todayTempEl.textContent = `Temp: ${todayTemp}°C`;
+        console.log(todayTempEl);
+        infoDiv.appendChild(todayTempEl);
 
 
-
-        
+        // Iterate through array to build 5-day forecast cards
 
         for (i = 7; i < cityList.length; i += 7) {
-          // console.log(forecastData);
-          // console.log(cityList[i]);
+
           var dailyForecast = cityList[i].main;
 
           var forecastEl = document.getElementById("forecast");
@@ -106,4 +125,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
         }
       });
   }
+  searchBtn.addEventListener("submit", searchWeather);
+  console.log(searchBtn);
 });
+
