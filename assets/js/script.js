@@ -69,8 +69,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
           forecastCardBody.appendChild(forecastIcon);
 
           var forecastDate = document.createElement('h3')
-          forecastDate.innerText = cityList[i].dt_txt.split(" ")[0];
-          forecastCardBody.appendChild(forecastDate)
+          forecastDate.innerText = dayjs(cityList[i].dt_txt).format('DD-MM-YY').replaceAll('-', '/');
+          forecastCardBody.appendChild(forecastDate);
 
           var forecastTemp = document.createElement("p");
           forecastTemp.innerText = `Temp: ${Math.round(100 * (dailyForecast.temp - 273.15))/100}°C`;
