@@ -38,10 +38,30 @@ document.addEventListener("DOMContentLoaded", (event) => {
         console.log(forecastData);
         console.log(forecastData.city);
 
-        var city = forecastData.name;
+        var city = forecastData.city.name;
         var cityList = forecastData.list;
 
         var todayForecast = document.getElementById('today');
+
+        var todayCard = document.createElement('div');
+        todayCard.classList.add('card');
+        todayForecast.appendChild(todayCard);
+
+        var todayDate = forecastData.list[0].dt_txt;        
+        todayDate = dayjs(todayDate).format('DD-MM-YY').replaceAll('-', '/');
+
+        var todayDateEl = document.createElement('h2');
+        todayDateEl.classList.add('m-3')
+        todayDateEl.innerText = `${city} (${todayDate})`
+        todayCard.appendChild(todayDateEl);
+
+        var todayIcon = document.createElement('img');
+        todayIcon.src = "https://openweathermap.org/img/wn/" + forecastData.list[0].weather[0].icon + "@2x.png";
+        todayIcon.classList.add('w-25', 'm-3')
+        todayCard.appendChild(todayIcon);
+
+
+
         
 
         for (i = 7; i < cityList.length; i += 7) {
@@ -61,7 +81,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
           forecastCardBody.classList.add("card-body");
 
           var forecastIcon = document.createElement("img");
-
+          
           forecastIcon.src =
             "https://openweathermap.org/img/wn/" +
             cityList[i].weather[0].icon +
