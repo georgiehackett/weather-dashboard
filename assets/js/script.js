@@ -67,6 +67,10 @@ document.addEventListener("DOMContentLoaded", (event) => {
             "@2x.png";
           forecastCardBody.appendChild(forecastIcon);
 
+          var forecastDate = document.createElement('h3')
+          forecastDate.innerText = cityList[i].dt_txt.split(" ")[0];
+          forecastCardBody.appendChild(forecastDate)
+
           var forecastTemp = document.createElement("p");
           forecastTemp.innerText = `Temp: ${dailyForecast.temp}`;
           forecastCardBody.appendChild(forecastTemp);
