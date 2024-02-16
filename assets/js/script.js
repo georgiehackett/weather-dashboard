@@ -55,11 +55,11 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
         var iconDiv = document.createElement('div');
         iconDiv.classList.add('col');
-        cardContentRow.appendChild(iconDiv)
+        cardContentRow.appendChild(iconDiv);
 
         var todayIcon = document.createElement('img');
         todayIcon.src = "https://openweathermap.org/img/wn/" + cityList[0].weather[0].icon + "@2x.png";
-        todayIcon.classList.add('w-50', 'm-2');
+        todayIcon.classList.add('w-50', 'ms-5');
         iconDiv.appendChild(todayIcon);
 
 
@@ -70,12 +70,18 @@ document.addEventListener("DOMContentLoaded", (event) => {
         var todayTempEl = document.createElement('p');        
         var todayTemp =  Math.round(100 * (cityList[0].main.temp - 273.15))/100;
         todayTempEl.textContent = `Temp: ${todayTemp}°C`;
+        todayTempEl.classList.add('mt-5')
         infoDiv.appendChild(todayTempEl);
 
 
         var todayHumidityEl = document.createElement('p');
         todayHumidityEl.textContent = `Humidity: ${cityList[0].main.humidity}%`
         infoDiv.appendChild(todayHumidityEl);
+
+        var todayWindEl = document.createElement('p');
+        var windSpeed = Math.round(100 * (cityList[0].wind.speed * 2.237))/100
+        todayWindEl.textContent = `Wind: ${windSpeed}mph`
+        infoDiv.appendChild(todayWindEl);
 
        
 
@@ -94,6 +100,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
           forecastCol.classList.add("col");
 
           var forecastCard = document.createElement("div");
+          // forecastCard.classList.add()
           forecastCard.classList.add("card");
 
           var forecastCardBody = document.createElement("div");
