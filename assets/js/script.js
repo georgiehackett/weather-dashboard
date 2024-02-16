@@ -10,7 +10,7 @@ var apiKey = "c2f29652dc947b9ba917f2a8f2a9b7e9";
 // var city = '';
 
 
-searchBtn.submit(searchWeather());
+searchBtn.addEventListener('submit', searchWeather());
 
 function searchWeather() {
   event.preventDefault();
@@ -18,8 +18,10 @@ function searchWeather() {
   var userInput = document.getElementById('search-input').value;
 
   var forecastQueryURL =
-"http://api.openweathermap.org/data/2.5/forecast?q=" + "London" + "&appid=" + apiKey;
+"http://api.openweathermap.org/data/2.5/forecast?q=" + "London" + "&appid=" + apiKey + "&limit=1";
 console.log(forecastQueryURL);
+
+
 
 // console.log(userInput);
 
@@ -33,6 +35,18 @@ console.log(forecastQueryURL);
   .then(function (forecastData) {
     // Log the resulting object
     console.log(forecastData);
+    console.log(forecastData.city);
+
+    var city = forecastData.name;
+    console.log(forecastData.list);
+
+    var cityList = forecastData.list;
+
+    for (i = 0; i < cityList.length; i+=8) {
+      // console.log(forecastData);
+      console.log(cityList[i]);
+    }
+    
 
   });
 }
