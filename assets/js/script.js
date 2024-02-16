@@ -1,81 +1,84 @@
-document.addEventListener('DOMContentLoaded', (event) => {
-  
-var searchBtn = document.getElementById('search-button');
-var todayEl = document.getElementById('today');
-var forecastEl = document.getElementById('forecast');
+document.addEventListener("DOMContentLoaded", (event) => {
+  var searchBtn = document.getElementById("search-button");
+  var todayEl = document.getElementById("today");
+  var forecastEl = document.getElementById("forecast");
+  var userInput = document.getElementById("search-input").value;
 
-//  Build the URL to query the database
-var apiKey = "c2f29652dc947b9ba917f2a8f2a9b7e9";
+  //  Build the URL to query the database
+  var apiKey = "c2f29652dc947b9ba917f2a8f2a9b7e9";
 
-// var city = '';
+  // var city = '';
 
+  searchBtn.addEventListener("submit", searchWeather());
 
-searchBtn.addEventListener('submit', searchWeather());
+  function searchWeather() {
+    event.preventDefault();
 
-function searchWeather() {
-  event.preventDefault();
+    console.log(userInput);
 
-  var userInput = document.getElementById('search-input').value;
+    var forecastQueryURL =
+      "http://api.openweathermap.org/data/2.5/forecast?q=" +
+      "London" +
+      "&appid=" +
+      apiKey +
+      "&limit=1";
+    console.log(forecastQueryURL);
 
-  var forecastQueryURL =
-"http://api.openweathermap.org/data/2.5/forecast?q=" + "London" + "&appid=" + apiKey + "&limit=1";
-console.log(forecastQueryURL);
+    // console.log(userInput);
 
+    // Run Fetch call to the forecast API
+    fetch(forecastQueryURL)
+      .then(function getCity(response) {
+        // Call .json() to access the json data stored inside the returned promise
+        return response.json();
+      })
+      // Store the retrieved data inside of an object called "forecastData"
+      .then(function (forecastData) {
+        // Log the resulting object
+        console.log(forecastData);
+        console.log(forecastData.city);
 
+        var city = forecastData.name;
+        console.log(forecastData.list);
 
-// console.log(userInput);
+        var cityList = forecastData.list;
 
-  // Run Fetch call to the forecast API
-  fetch(forecastQueryURL)
-  .then(function getCity(response) {
-    // Call .json() to access the json data stored inside the returned promise
-    return response.json();
-  })
-  // Store the retrieved data inside of an object called "forecastData"
-  .then(function (forecastData) {
-    // Log the resulting object
-    console.log(forecastData);
-    console.log(forecastData.city);
+        for (i = 7; i < cityList.length; i += 7) {
+          // console.log(forecastData);
+          console.log(cityList[i]);
+          var dailyForecast = cityList[i].main;
 
-    var city = forecastData.name;
-    console.log(forecastData.list);
+          var forecastEl = document.getElementById("forecast");
 
-    var cityList = forecastData.list;
+          var forecastCol = document.createElement("div");
+          forecastCol.classList.add("col");
 
-    for (i = 7; i < cityList.length; i+=7) {
-      // console.log(forecastData);
-      console.log(cityList[i]);
-      var dailyForecast = cityList[i].main;
+          var forecastCard = document.createElement("div");
+          forecastCard.classList.add("card");
 
-      var forecastEl = document.getElementById('forecast');
+          var forecastCardBody = document.createElement("div");
+          forecastCardBody.classList.add("card-body");
 
-      var forecastCol = document.createElement('div');
-      forecastCol.classList.add("col");
+          var forecastIcon = document.createElement("img");
 
-      var forecastCard = document.createElement('div');
-      forecastCard.classList.add('card');
-      
-      var forecastCardBody = document.createElement('div');
-      forecastCardBody.classList.add('card-body');
+          forecastIcon.src =
+            "https://openweathermap.org/img/wn/" +
+            cityList[i].weather[0].icon +
+            "@2x.png";
+          forecastCardBody.appendChild(forecastIcon);
 
-      var forecastIcon = document.createElement('img');
-      forecastIcon.src = "https://openweathermap.org/img/wn/" + cityList[i].weather[0].icon + "@2x.png";
-      console.log(forecastIcon);
+          var forecastTemp = document.createElement("p");
+          forecastTemp.innerText = `Temp: ${dailyForecast.temp}`;
+          forecastCardBody.appendChild(forecastTemp);
 
-      forecastCardBody.appendChild(forecastIcon);
-      // forecastCardBody.innerText = `Temp: ${dailyForecast.temp}
-      // Humidity: ${dailyForecast.humidity}`;
+          var forecastHumidity = document.createElement("p");
+          forecastHumidity.innerText = `Humidity: ${dailyForecast.humidity}`;
+          forecastCardBody.appendChild(forecastHumidity);
 
-      forecastCard.appendChild(forecastCardBody)
-      forecastCol.appendChild(forecastCard);
-      forecastEl.appendChild(forecastCol);
-      
-    
-
-
-    }
-    
-
-  });
-}
+          forecastCard.appendChild(forecastCardBody);
+          forecastCol.appendChild(forecastCard);
+          forecastEl.appendChild(forecastCol);
+        }
+      });
+  }
 });
