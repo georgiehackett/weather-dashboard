@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
     todayEl.innerHTML = '';
     forecastEl.innerHTML = '';
 
+
     var userInput = document.getElementById("search-input").value;
 
     var history = JSON.parse(localStorage.getItem('history'));
@@ -22,12 +23,21 @@ document.addEventListener("DOMContentLoaded", (event) => {
     if (!history) {
       var history = [];
     }
+
     history.unshift(userInput);
     if (history.length > 5) {
       history.pop();
     }
     localStorage.setItem('history', JSON.stringify(history));
-    console.log(history);
+
+    historyEl.innerHTML = '';    
+
+    for (i=0; i < history.length; i++) {
+      var userHistory = document.createElement('button');
+      userHistory.classList.add('btn', 'btn-outline-secondary', 'mt-2', 'p-2');
+      userHistory.textContent = history[i];
+      historyEl.appendChild(userHistory);
+    }
 
     //  Build the URL to query the database
     var forecastQueryURL =
