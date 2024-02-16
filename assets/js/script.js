@@ -39,13 +39,14 @@ document.addEventListener("DOMContentLoaded", (event) => {
         console.log(forecastData.city);
 
         var city = forecastData.name;
-        console.log(forecastData.list);
-
         var cityList = forecastData.list;
+
+        var todayForecast = document.getElementById('today');
+        
 
         for (i = 7; i < cityList.length; i += 7) {
           // console.log(forecastData);
-          console.log(cityList[i]);
+          // console.log(cityList[i]);
           var dailyForecast = cityList[i].main;
 
           var forecastEl = document.getElementById("forecast");
@@ -72,11 +73,11 @@ document.addEventListener("DOMContentLoaded", (event) => {
           forecastCardBody.appendChild(forecastDate)
 
           var forecastTemp = document.createElement("p");
-          forecastTemp.innerText = `Temp: ${dailyForecast.temp}`;
+          forecastTemp.innerText = `Temp: ${Math.round(100 * (dailyForecast.temp - 273.15))/100}°C`;
           forecastCardBody.appendChild(forecastTemp);
 
           var forecastHumidity = document.createElement("p");
-          forecastHumidity.innerText = `Humidity: ${dailyForecast.humidity}`;
+          forecastHumidity.innerText = `Humidity: ${dailyForecast.humidity}% `;
           forecastCardBody.appendChild(forecastHumidity);
 
           forecastCard.appendChild(forecastCardBody);
