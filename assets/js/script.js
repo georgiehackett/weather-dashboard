@@ -2,6 +2,9 @@ document.addEventListener("DOMContentLoaded", (event) => {
   var searchBtn = document.getElementById("search-form");
   var todayEl = document.getElementById("today");
   var forecastEl = document.getElementById("forecast");
+  var historyEl = document.getElementById('history');
+
+  
 
   var apiKey = "c2f29652dc947b9ba917f2a8f2a9b7e9";
 
@@ -13,6 +16,18 @@ document.addEventListener("DOMContentLoaded", (event) => {
     forecastEl.innerHTML = '';
 
     var userInput = document.getElementById("search-input").value;
+
+    var history = JSON.parse(localStorage.getItem('history'));
+
+    if (!history) {
+      var history = [];
+    }
+    history.unshift(userInput);
+    if (history.length > 5) {
+      history.pop();
+    }
+    localStorage.setItem('history', JSON.stringify(history));
+    console.log(history);
 
     //  Build the URL to query the database
     var forecastQueryURL =
