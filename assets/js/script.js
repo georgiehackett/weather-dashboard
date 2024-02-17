@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
     //  Build the URL to query the database
     var forecastQueryURL =
-      "http://api.openweathermap.org/data/2.5/forecast?q=" +
+      "https://api.openweathermap.org/data/2.5/forecast?q=" +
       userInput +
       "&appid=" +
       apiKey +
