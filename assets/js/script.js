@@ -36,6 +36,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
       var userHistory = document.createElement('button');
       userHistory.classList.add('btn', 'btn-outline-secondary', 'mt-2', 'p-2');
       userHistory.textContent = history[i];
+      userHistory.addEventListener('click', searchWeather)
       historyEl.appendChild(userHistory);
     }
 
@@ -106,14 +107,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
         var todayWindEl = document.createElement('p');
         var windSpeed = Math.round(100 * (cityList[0].wind.speed * 2.237))/100
         todayWindEl.textContent = `Wind: ${windSpeed}mph`
-        infoDiv.appendChild(todayWindEl);
-
-       
-
-
-    
-        // infoDiv.appendChild(todayTempEl);
-
+        infoDiv.appendChild(todayWindEl);    
 
         // Iterate through array to build 5-day forecast cards
 
