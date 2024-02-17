@@ -32,6 +32,10 @@ Data displayed includes:
 
 Your five most recent searches will be stored and displayed as buttons for you to search again.
 
+The app's functionality should resemble the following:
+
+![app screenshot](./assets/images/forecast-dashboard.png) 
+
 ## Technologies
 
 ![Javascript](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E)
